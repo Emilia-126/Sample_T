@@ -1,8 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('') {
+    stage('test') {
       steps {
+        o 'start test.'
         timestamps()
       }
     }

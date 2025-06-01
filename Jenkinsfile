@@ -1,7 +1,7 @@
 pipeline {
     agent any
     options {
-        timestamps() // 在輸出中加上時間戳
+        timestamps() 
     }
     stages {
         stage('Checkout') {
@@ -9,7 +9,7 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Checkout..."
-                    git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main', changelog: true)
+                    git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
                     def endTime = System.currentTimeMillis()
                     echo "Checkout 耗時: ${(endTime - startTime) / 1000} 秒"
                 }
@@ -20,6 +20,7 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Build..."
+					nuget restore TestDTSeqEqual.sln
 					bat 'msbuild TestDTSeqEqual.sln /p:Configuration=Release /p:Platform="Any CPU"'
                     def endTime = System.currentTimeMillis()
                     echo "Build 耗時: ${(endTime - startTime) / 1000} 秒"
@@ -41,7 +42,7 @@ pipeline {
     post {
         always {
             script {
-                echo "總執行時間: ${currentBuild.duration / 1000} 秒"
+                echo "Pipeline 總執行時間: ${currentBuild.duration / 1000} 秒"
             }
         }
     }

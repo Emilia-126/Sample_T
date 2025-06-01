@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('test') {
       steps {
-        o 'start test.'
+        echo 'start test.'
         timestamps()
       }
     }

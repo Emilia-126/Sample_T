@@ -1,0 +1,15 @@
+D:\Project\ConsoleApp1\bin\Release\log4net.config
+D:\Project\ConsoleApp1\bin\Release\ConsoleApp1.exe.config
+D:\Project\ConsoleApp1\bin\Release\ConsoleApp1.exe.manifest
+D:\Project\ConsoleApp1\bin\Release\ConsoleApp1.application
+D:\Project\ConsoleApp1\bin\Release\ConsoleApp1.exe
+D:\Project\ConsoleApp1\bin\Release\ConsoleApp1.pdb
+D:\Project\ConsoleApp1\bin\Release\log4net.dll
+D:\Project\ConsoleApp1\bin\Release\log4net.xml
+D:\Project\ConsoleApp1\obj\Release\TestDTSeqEqual.csproj.AssemblyReference.cache
+D:\Project\ConsoleApp1\obj\Release\TestDTSeqEqual.csproj.CoreCompileInputs.cache
+D:\Project\ConsoleApp1\obj\Release\ConsoleApp1.exe.manifest
+D:\Project\ConsoleApp1\obj\Release\ConsoleApp1.application
+D:\Project\ConsoleApp1\obj\Release\TestDTSeqEqual.csproj.CopyComplete
+D:\Project\ConsoleApp1\obj\Release\ConsoleApp1.exe
+D:\Project\ConsoleApp1\obj\Release\ConsoleApp1.pdb

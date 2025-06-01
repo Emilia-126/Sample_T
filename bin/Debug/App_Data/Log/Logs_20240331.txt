@@ -1,0 +1,2 @@
+2024-03-31 16:51:15,472 [1] DEBUG ConsoleApp1.Program - 第一次使用log4net!
+2024-03-31 16:51:15,484 [1] DEBUG ConsoleApp1.Program - 第一次使用log4net!

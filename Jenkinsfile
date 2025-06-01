@@ -38,6 +38,11 @@ pipeline {
                 }
             }
         }
+    	stage('Clean Workspace') {
+		steps {
+			cleanWs() // 清除 workspace
+		}
+	}
     }
     post {
         always {

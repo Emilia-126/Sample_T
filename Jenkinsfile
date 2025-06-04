@@ -3,6 +3,9 @@ pipeline {
     options {
         timestamps() 
     }
+	tools {
+        msbuild 'MSBuild 2019'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -17,7 +20,13 @@ pipeline {
         }
         stage('Build') {
             steps {
-		msbuild TestDTSeqEqual.sln 
+                script {
+                    def startTime = System.currentTimeMillis()
+                    echo "開始 Build..."
+		    bat 'msbuild TestDTSeqEqual.sln /p:Configuration=Release %MSBUILD_ARGS%'
+                    def endTime = System.currentTimeMillis()
+                    echo "Build 耗時: ${(endTime - startTime) / 1000} 秒"
+                }
             }
         }
         stage('Test') {

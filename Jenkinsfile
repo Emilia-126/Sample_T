@@ -17,16 +17,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                script {
-                    def startTime = System.currentTimeMillis()
-                    echo "開始 Build..."
-                }
 		msbuild TestDTSeqEqual.sln 
-		script {
-                    def endTime = System.currentTimeMillis()
-                    echo "Build 耗時: ${(endTime - startTime) / 1000} 秒"
-                }
-		    
             }
         }
         stage('Test') {

@@ -20,7 +20,7 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Build..."
-		    bat 'msbuild TestDTSeqEqual.sln /p:Configuration=Release /p:Platform="Any CPU"'
+		     msbuild TestDTSeqEqual.sln 
                     def endTime = System.currentTimeMillis()
                     echo "Build 耗時: ${(endTime - startTime) / 1000} 秒"
                 }

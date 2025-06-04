@@ -3,8 +3,8 @@ pipeline {
     options {
         timestamps() 
     }
-	tools {
-        msbuild 'MSBuild 2019'
+    tools {
+        msbuild 'MSBuild_2019'
     }
     stages {
         stage('Checkout') {

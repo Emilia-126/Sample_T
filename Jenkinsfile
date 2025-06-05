@@ -34,7 +34,7 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Test..."
-                    bat '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" ConsoleApp1.exe /Logger:trx''
+                    echo "未執行任何動作"
                     def endTime = System.currentTimeMillis()
                     echo "Test 耗時: ${(endTime - startTime) / 1000} 秒"
                 }

@@ -34,7 +34,7 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Test..."
-                    bat 'vstest.console.exe YourTestProject.dll'
+                    bat 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe ConsoleApp1.exe'
                     def endTime = System.currentTimeMillis()
                     echo "Test 耗時: ${(endTime - startTime) / 1000} 秒"
                 }
@@ -51,6 +51,12 @@ pipeline {
             script {
                 echo "Pipeline 總執行時間: ${currentBuild.duration / 1000} 秒"
             }
+        }
+        success {
+            echo 'Pipeline 執行成功 🎉'
+        }
+        failure {
+            echo 'Pipeline 失敗，請檢查錯誤 ❌'
         }
     }
 }

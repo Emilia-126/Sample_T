@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        JAVA_TOOL_OPTIONS = "-Dfile.encoding=UTF-8"
-    }
     options {
         timestamps() 
     }
@@ -15,18 +12,23 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Checkout..."
-                    git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
+                    //git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
+			checkout scm
                     def endTime = System.currentTimeMillis()
                     echo "Checkout 耗時: ${(endTime - startTime) / 1000} 秒"
                 }
             }
         }
         stage('Build') {
+	    when {
+                branch 'main'
+            }
             steps {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Build..."
-		    bat 'msbuild TestDTSeqEqual.sln /p:Configuration=Release %MSBUILD_ARGS%'
+		    //bat 'msbuild TestDTSeqEqual.sln /p:Configuration=Release %MSBUILD_ARGS%'
+			bat 'msbuild /t:Rebuild /p:Configuration=Release'
                     def endTime = System.currentTimeMillis()
                     echo "Build 耗時: ${(endTime - startTime) / 1000} 秒"
                 }
@@ -41,6 +43,18 @@ pipeline {
                     def endTime = System.currentTimeMillis()
                     echo "Test 耗時: ${(endTime - startTime) / 1000} 秒"
                 }
+            }
+        }
+	stage('Deploy') {
+            when {
+                branch 'main'
+            }
+            steps {
+		def startTime = System.currentTimeMillis()
+	    	echo "開始 Deploy..." 
+                bat 'msdeploy -source:package.zip -dest:auto'
+	    	def endTime = System.currentTimeMillis()
+	    	echo "Test 耗時: ${(endTime - startTime) / 1000} 秒"
             }
         }
     	stage('Clean Workspace') {

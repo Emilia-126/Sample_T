@@ -12,10 +12,10 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Checkout..."
-                    git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
-			//checkout scm
+                    //git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
+			checkout scm
                     def endTime = System.currentTimeMillis()
-                    echo "Checkout 耗時: ${(endTime - startTime) / 1000} 秒"
+                    echo "Checkout【 ${env.BRANCH_NAME} 】耗時: ${(endTime - startTime) / 1000} 秒"
                 }
             }
         }

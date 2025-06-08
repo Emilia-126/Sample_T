@@ -57,11 +57,7 @@ pipeline {
 	    	echo "Test 耗時: ${(endTime - startTime) / 1000} 秒"
             }
         }
-    	stage('Clean Workspace') {
-		steps {
-			cleanWs() // 清除 workspace
-		}
-	}
+    	
     }
     post {
         always {

@@ -50,11 +50,13 @@ pipeline {
                 branch 'main'
             }
             steps {
-		def startTime = System.currentTimeMillis()
-	    	echo "開始 Deploy..." 
-                bat 'msdeploy -source:package.zip -dest:auto'
-	    	def endTime = System.currentTimeMillis()
-	    	echo "Test 耗時: ${(endTime - startTime) / 1000} 秒"
+	    	script {
+			def startTime = System.currentTimeMillis()
+	    		echo "開始 Deploy..." 
+                	bat 'msdeploy -source:package.zip -dest:auto'
+	    		def endTime = System.currentTimeMillis()
+	    		echo "Test 耗時: ${(endTime - startTime) / 1000} 秒"
+	    	}
             }
         }
     	

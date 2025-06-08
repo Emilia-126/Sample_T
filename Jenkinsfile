@@ -14,6 +14,7 @@ pipeline {
                     echo "開始 Checkout..."
                     //git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
 			checkout scm
+			def branchName = sh(script: "git rev-parse --abbrev-ref HEAD", returnStdout: true).trim()
                     def endTime = System.currentTimeMillis()
                     echo "Checkout【 ${env.BRANCH_NAME} 】耗時: ${(endTime - startTime) / 1000} 秒"
                 }

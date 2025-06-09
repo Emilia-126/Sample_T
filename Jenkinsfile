@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     env.GIT_BRANCH = env.BRANCH_NAME ?: 'main'
-                    echo "Using branch: ${env.GIT_BRANCH}"
+                    echo "Using branch 【 ${env.GIT_BRANCH} 】"
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Checkout..."
                     //git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
-		     git branch: "${env.GIT_BRANCH}", credentialsId: 'github_SSH', url: 'https://github.com/Emilia-126/Sample_T.git'
+		     git branch: "${env.GIT_BRANCH}", url: 'https://github.com/Emilia-126/Sample_T.git'
                     def endTime = System.currentTimeMillis()
                     echo "Checkout【 "${env.GIT_BRANCH}" 】耗時: ${(endTime - startTime) / 1000} 秒"
                 }

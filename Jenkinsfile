@@ -12,29 +12,29 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Checkout..."
-                    git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
-			//checkout scm
+                    //git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
+		 	git branch: env.BRANCH_NAME, credentialsId: 'github-credentials', url: 'https://github.com/user/repo.git'
                     def endTime = System.currentTimeMillis()
                     echo "Checkout【 ${env.BRANCH_NAME} 】耗時: ${(endTime - startTime) / 1000} 秒"
                 }
             }
         }
         stage('Build') {
-	    when {
-                branch 'main'
-            }
             steps {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Build..."
 		    //bat 'msbuild TestDTSeqEqual.sln /p:Configuration=Release %MSBUILD_ARGS%'
-			bat 'msbuild /t:Rebuild /p:Configuration=Release'
+			bat "msbuild TestDTSeqEqual.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /m"
                     def endTime = System.currentTimeMillis()
                     echo "Build 耗時: ${(endTime - startTime) / 1000} 秒"
                 }
             }
         }
         stage('Test') {
+	    when {
+                expression { env.BRANCH_NAME == 'main'}
+            }
             steps {
                 script {
                     def startTime = System.currentTimeMillis()
@@ -47,7 +47,7 @@ pipeline {
         }
 	stage('Deploy') {
             when {
-                branch 'main'
+                expression { env.BRANCH_NAME == 'main'}
             }
             steps {
 	    	script {
@@ -64,6 +64,7 @@ pipeline {
     post {
         always {
             script {
+		cleanWs()  // 清除 Jenkins 工作區
                 echo "Pipeline 總執行時間: ${currentBuild.duration / 1000} 秒"
             }
         }

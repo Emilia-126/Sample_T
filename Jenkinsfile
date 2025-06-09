@@ -7,6 +7,11 @@ pipeline {
         msbuild 'MSBuild_2019'
     }
     stages {
+        stage('Cleanup Workspace') {
+            steps {
+                cleanWs()  // 清除 Jenkins 工作區
+            }
+        }
         stage('Checkout') {
             steps {
                 script {

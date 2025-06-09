@@ -2,17 +2,19 @@ pipeline {
     agent any
     options {
         timestamps() 
-    }
-    environment {
-	script {
-        	env.GIT_BRANCH = env.BRANCH_NAME ?: 'main'
-                echo "Using branch: ${env.GIT_BRANCH}"
-	}
     }	
     tools {
         msbuild 'MSBuild_2019'
     }
     stages {
+    	stage('Setup Environment') {
+            steps {
+                script {
+                    env.GIT_BRANCH = env.BRANCH_NAME ?: 'main'
+                    echo "Using branch: ${env.GIT_BRANCH}"
+                }
+            }
+        }
         stage('Cleanup Workspace') {
             steps {
                 cleanWs()  // 清除 Jenkins 工作區
@@ -24,9 +26,9 @@ pipeline {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Checkout..."
                     //git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
-		     git branch: "${GIT_BRANCH}", credentialsId: 'github_SSH', url: 'https://github.com/Emilia-126/Sample_T.git'
+		     git branch: "${env.GIT_BRANCH}", credentialsId: 'github_SSH', url: 'https://github.com/Emilia-126/Sample_T.git'
                     def endTime = System.currentTimeMillis()
-                    echo "Checkout【 ${GIT_BRANCH} 】耗時: ${(endTime - startTime) / 1000} 秒"
+                    echo "Checkout【 "${env.GIT_BRANCH}" 】耗時: ${(endTime - startTime) / 1000} 秒"
                 }
             }
         }
@@ -35,6 +37,7 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Build..."
+			
 		    //bat 'msbuild TestDTSeqEqual.sln /p:Configuration=Release %MSBUILD_ARGS%'
 			bat "msbuild TestDTSeqEqual.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /m"
                     def endTime = System.currentTimeMillis()
@@ -44,7 +47,7 @@ pipeline {
         }
         stage('Test') {
 	    when {
-                expression { GIT_BRANCH == 'main' }
+                expression { env.GIT_BRANCH == 'main' }
             }
             steps {
                 script {
@@ -58,7 +61,7 @@ pipeline {
         }
 	stage('Deploy') {
             when {
-                expression { GIT_BRANCH == 'main' }
+                expression { env.GIT_BRANCH == 'main' }
             }
             steps {
 	    	script {

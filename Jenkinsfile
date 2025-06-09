@@ -3,6 +3,9 @@ pipeline {
     options {
         timestamps() 
     }
+    environment {
+        GIT_BRANCH = env.BRANCH_NAME ?: 'main' // 若 env.BRANCH_NAME 無值，則預設 "main"
+    }	
     tools {
         msbuild 'MSBuild_2019'
     }
@@ -18,9 +21,9 @@ pipeline {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Checkout..."
                     //git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: ain')
-		     git branch: env.BRANCH_NAME, credentialsId: 'github_SSH', url: 'https://github.com/Emilia-126/Sample_T.git'
+		     git branch: "${GIT_BRANCH}", credentialsId: 'github_SSH', url: 'https://github.com/Emilia-126/Sample_T.git'
                     def endTime = System.currentTimeMillis()
-                    echo "Checkout【 ${env.BRANCH_NAME} 】耗時: ${(endTime - startTime) / 1000} 秒"
+                    echo "Checkout【 ${GIT_BRANCH}】耗時: ${(endTime - startTime) / 1000} 秒"
                 }
             }
         }
@@ -38,7 +41,7 @@ pipeline {
         }
         stage('Test') {
 	    when {
-                expression { env.BRANCH_NAME == 'main'}
+                expression { GIT_BRANCH == 'main' }
             }
             steps {
                 script {
@@ -52,7 +55,7 @@ pipeline {
         }
 	stage('Deploy') {
             when {
-                expression { env.BRANCH_NAME == 'main'}
+                expression { GIT_BRANCH == 'main' }
             }
             steps {
 	    	script {
@@ -69,7 +72,6 @@ pipeline {
     post {
         always {
             script {
-		cleanWs()  // 清除 Jenkins 工作區
                 echo "Pipeline 總執行時間: ${currentBuild.duration / 1000} 秒"
             }
         }

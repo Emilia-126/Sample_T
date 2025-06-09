@@ -12,8 +12,8 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Checkout..."
-                    //git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
-		 	git branch: env.BRANCH_NAME, credentialsId: 'github_SSH', url: 'https://github.com/Emilia-126/Sample_T.git'
+                    git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: env.BRANCH_NAME)
+		 	//git branch: env.BRANCH_NAME, url: 'https://github.com/Emilia-126/Sample_T.git'
                     def endTime = System.currentTimeMillis()
                     echo "Checkout【 ${env.BRANCH_NAME} 】耗時: ${(endTime - startTime) / 1000} 秒"
                 }

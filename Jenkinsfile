@@ -4,7 +4,7 @@ pipeline {
         timestamps() 
     }
     environment {
-        GIT_BRANCH = env.BRANCH_NAME ?: 'main' // 若 env.BRANCH_NAME 無值，則預設 "main"
+        GIT_BRANCH = env.BRANCH_NAME ?: 'main' 
  	echo "GIT_BRANCH = ${GIT_BRANCH}"
     }	
     tools {

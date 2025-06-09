@@ -4,8 +4,10 @@ pipeline {
         timestamps() 
     }
     environment {
-        GIT_BRANCH = env.BRANCH_NAME ?: 'main' 
- 	echo "GIT_BRANCH = ${GIT_BRANCH}"
+	script {
+        	env.GIT_BRANCH = env.BRANCH_NAME ?: 'main'
+                echo "Using branch: ${env.GIT_BRANCH}"
+	}
     }	
     tools {
         msbuild 'MSBuild_2019'

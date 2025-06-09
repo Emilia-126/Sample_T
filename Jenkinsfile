@@ -5,6 +5,7 @@ pipeline {
     }
     environment {
         GIT_BRANCH = env.BRANCH_NAME ?: 'main' // 若 env.BRANCH_NAME 無值，則預設 "main"
+ 	echo "GIT_BRANCH = ${GIT_BRANCH}"
     }	
     tools {
         msbuild 'MSBuild_2019'
@@ -20,10 +21,10 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Checkout..."
-                    //git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: ain')
+                    //git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
 		     git branch: "${GIT_BRANCH}", credentialsId: 'github_SSH', url: 'https://github.com/Emilia-126/Sample_T.git'
                     def endTime = System.currentTimeMillis()
-                    echo "Checkout【 ${GIT_BRANCH}】耗時: ${(endTime - startTime) / 1000} 秒"
+                    echo "Checkout【 ${GIT_BRANCH} 】耗時: ${(endTime - startTime) / 1000} 秒"
                 }
             }
         }

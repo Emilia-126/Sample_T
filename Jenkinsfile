@@ -34,7 +34,12 @@ pipeline {
         }
 	stage('Restore NuGet') {
             steps {
-                bat 'nuget restore TestDTSeqEqual.sln'
+                script {
+	            retry(3) {  
+	                bat 'msbuild TestDTSeqEqual.sln /t:Restore /p:RestorePackagesConfig=true /p:UseLegacyPackageReference=false > restore.log 2>&1'
+			archiveArtifacts artifacts: 'restore.log', onlyIfSuccessful: false
+	            }
+	        }
             }
         }
         stage('Build') {

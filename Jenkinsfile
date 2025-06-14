@@ -10,7 +10,7 @@ pipeline {
     	stage('Setup Environment') {
             steps {
                 script {
-                    BRANCH_NAME = env.BRANCH_NAME ?: 'main'
+                    env.BRANCH_NAME = env.BRANCH_NAME ?: 'main'
                     echo "Using branch 【 ${env.BRANCH_NAME} 】"
                 }
             }

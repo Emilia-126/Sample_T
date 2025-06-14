@@ -28,7 +28,7 @@ pipeline {
                     git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
 		     //git branch: "${env.GIT_BRANCH}", url: 'https://github.com/Emilia-126/Sample_T.git'
                     def endTime = System.currentTimeMillis()
-                    echo "Checkout【 "${env.GIT_BRANCH}" 】耗時: ${(endTime - startTime) / 1000} 秒"
+                    echo "Checkout【 ${env.GIT_BRANCH} 】耗時: ${(endTime - startTime) / 1000} 秒"
                 }
             }
         }

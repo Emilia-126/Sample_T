@@ -32,6 +32,11 @@ pipeline {
                 }
             }
         }
+	stage('Restore NuGet') {
+            steps {
+                bat 'nuget restore TestDTSeqEqual.sln'
+            }
+        }
         stage('Build') {
             steps {
                 script {

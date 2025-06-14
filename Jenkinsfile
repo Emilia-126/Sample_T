@@ -52,8 +52,7 @@ pipeline {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Test..."
 		    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-			bat 'bin\\Debug\\ConsoleApp1.exe'
-			error("Unit tests failed!")
+			bat 'bin\\Debug\\ConsoleApp1.exe  > output.log 2>&1'
 		     }
                     def endTime = System.currentTimeMillis()
                     echo "Test 耗時: ${(endTime - startTime) / 1000} 秒"

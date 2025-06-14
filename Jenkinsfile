@@ -10,7 +10,7 @@ pipeline {
     	stage('Setup Environment') {
             steps {
                 script {
-                    env.BRANCH_NAME = env.BRANCH_NAME ?: 'main'
+                    BRANCH_NAME = env.BRANCH_NAME ?: 'main'
                     echo "Using branch 【 ${env.BRANCH_NAME} 】"
                 }
             }
@@ -58,6 +58,7 @@ pipeline {
                     echo "開始 Test..."
 		    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 			bat 'bin\\Debug\\ConsoleApp1.exe  > output.log 2>&1'
+			archiveArtifacts artifacts: 'output.log', onlyIfSuccessful: false
 		     }
                     def endTime = System.currentTimeMillis()
                     echo "Test 耗時: ${(endTime - startTime) / 1000} 秒"

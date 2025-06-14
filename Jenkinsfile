@@ -36,12 +36,8 @@ pipeline {
             steps {
                 script {
                     def startTime = System.currentTimeMillis()
-                    echo "開始 Build..."
-		    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-			bat '"C:\\Program Files\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow\\vstest.console.exe" ConsoleApp1.exe'
-			error("Unit tests failed!")
-		     }	
-		    //bat 'msbuild TestDTSeqEqual.sln /p:Configuration=Release %MSBUILD_ARGS%'
+                    echo "開始 Build..."	
+		    bat 'msbuild TestDTSeqEqual.sln /p:Configuration=Release %MSBUILD_ARGS%'
                     def endTime = System.currentTimeMillis()
                     echo "Build 耗時: ${(endTime - startTime) / 1000} 秒"
                 }
@@ -55,7 +51,10 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Test..."
-                    echo "未執行任何動作"
+		    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+			bat '"C:\\Program Files\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow\\vstest.console.exe" ConsoleApp1.exe'
+			error("Unit tests failed!")
+		     }
                     def endTime = System.currentTimeMillis()
                     echo "Test 耗時: ${(endTime - startTime) / 1000} 秒"
                 }

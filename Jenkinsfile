@@ -43,7 +43,7 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage('Unit Test') {
 	    when {
                 expression { env.BRANCH_NAME == 'main' }
             }
@@ -52,7 +52,7 @@ pipeline {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Test..."
 		    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-			bat '"C:\\Program Files\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow\\vstest.console.exe" ConsoleApp1.exe'
+			bat 'bin\\Debug\\ConsoleApp1.exe'
 			error("Unit tests failed!")
 		     }
                     def endTime = System.currentTimeMillis()

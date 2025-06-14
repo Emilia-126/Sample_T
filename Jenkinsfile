@@ -10,8 +10,8 @@ pipeline {
     	stage('Setup Environment') {
             steps {
                 script {
-                    env.GIT_BRANCH = env.BRANCH_NAME ?: 'main'
-                    echo "Using branch 【 ${env.GIT_BRANCH} 】"
+                    env.BRANCH_NAME = env.BRANCH_NAME ?: 'main'
+                    echo "Using branch 【 ${env.BRANCH_NAME} 】"
                 }
             }
         }
@@ -25,10 +25,10 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Checkout..."
-                    git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: env.GIT_BRANCH)
+                    git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: env.BRANCH_NAME)
 		     //git branch: "${env.GIT_BRANCH}", url: 'https://github.com/Emilia-126/Sample_T.git'
                     def endTime = System.currentTimeMillis()
-                    echo "Checkout【 ${env.GIT_BRANCH} 】耗時: ${(endTime - startTime) / 1000} 秒"
+                    echo "Checkout【 ${env.BRANCH_NAME} 】耗時: ${(endTime - startTime) / 1000} 秒"
                 }
             }
         }
@@ -49,7 +49,7 @@ pipeline {
         }
         stage('Test') {
 	    when {
-                expression { env.GIT_BRANCH == 'main' }
+                expression { env.BRANCH_NAME == 'main' }
             }
             steps {
                 script {
@@ -63,7 +63,7 @@ pipeline {
         }
 	stage('Deploy') {
             when {
-                expression { env.GIT_BRANCH == 'main' }
+                expression { env.BRANCH_NAME == 'main' }
             }
             steps {
 	    	script {

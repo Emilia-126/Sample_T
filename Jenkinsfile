@@ -25,8 +25,8 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Checkout..."
-                    //git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: 'main')
-		     git branch: "${env.GIT_BRANCH}", url: 'https://github.com/Emilia-126/Sample_T.git'
+                    git(url: 'https://github.com/Emilia-126/Sample_T.git', branch: ${env.GIT_BRANCH})
+		     //git branch: "${env.GIT_BRANCH}", url: 'https://github.com/Emilia-126/Sample_T.git'
                     def endTime = System.currentTimeMillis()
                     echo "Checkout【 "${env.GIT_BRANCH}" 】耗時: ${(endTime - startTime) / 1000} 秒"
                 }
@@ -37,9 +37,11 @@ pipeline {
                 script {
                     def startTime = System.currentTimeMillis()
                     echo "開始 Build..."
-			
+		    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+			bat '"C:\\Program Files\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow\\vstest.console.exe" ConsoleApp1.exe'
+			error("Unit tests failed!")
+		     }	
 		    //bat 'msbuild TestDTSeqEqual.sln /p:Configuration=Release %MSBUILD_ARGS%'
-			bat "msbuild TestDTSeqEqual.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /m"
                     def endTime = System.currentTimeMillis()
                     echo "Build 耗時: ${(endTime - startTime) / 1000} 秒"
                 }

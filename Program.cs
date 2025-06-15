@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-
+//Test
 namespace ConsoleApp1
 {
     class Program
@@ -77,14 +76,8 @@ namespace ConsoleApp1
                 datas.Rows.Add("4346009" + a, "BX-202401" + b, (DateTime)DateTime.Now + time1, (DateTime)LOG_DTE + time2);
 
             }
-            
-
-            
-
         
         }
-
-
 
     }
 }

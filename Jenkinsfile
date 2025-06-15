@@ -78,12 +78,13 @@ pipeline {
 	    	script {
 			def startTime = System.currentTimeMillis()
 	    		echo "開始 Deploy..." 
-                	bat 'msdeploy -source:package.zip -dest:auto'
+                	powershell 'Compress-Archive -Path * -DestinationPath Sample_T.zip'
+                        bat 'msdeploy.exe -verb:sync -source:package="Sample_T.zip" -dest:contentPath="D:\0_Publish\"'
 	    		def endTime = System.currentTimeMillis()
 	    		echo "Test 耗時: ${(endTime - startTime) / 1000} 秒"
 	    	}
             }
-        }
+        } 	
     	
     }
     post {
